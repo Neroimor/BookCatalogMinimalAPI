@@ -7,19 +7,23 @@ namespace BookCatalogAPI.Filters
     {
         public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
         {
-            BookQuery? bookQuery = context.GetArgument<BookQuery>(0);
-            if (bookQuery?.Book == null)
+            Book book = context.GetArgument<Book>(0);
+            if (book == null)
             {
-                return Results.BadRequest("Book cannot be null.");
+                context.HttpContext.Response.StatusCode = 400;
+                return new BookQuery { StatusCode = 400, Book = null };
             }
-            if (string.IsNullOrWhiteSpace(bookQuery.Book.Title) || string.IsNullOrWhiteSpace(bookQuery.Book.Author) || bookQuery.Book.Price <= 0 || string.IsNullOrWhiteSpace(bookQuery.Book.Year))
+            if (string.IsNullOrWhiteSpace(book.Title) || string.IsNullOrWhiteSpace(book.Author))
             {
-                return Results.BadRequest("Book properties cannot be empty or invalid.");
+                context.HttpContext.Response.StatusCode = 400;
+                return new BookQuery { StatusCode = 400, Book = null };
             }
-            if (bookQuery.Book.Id < 0)
+            if (book.Price <= 0 || string.IsNullOrWhiteSpace(book.Year) || !int.TryParse(book.Year, out _))
             {
-                return Results.BadRequest("Book ID cannot be negative.");
+                context.HttpContext.Response.StatusCode = 400;
+                return new BookQuery { StatusCode = 400, Book = null };
             }
+
 
             return await next(context);
         }
