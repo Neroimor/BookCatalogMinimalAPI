@@ -14,7 +14,8 @@ namespace BookCatalogAPI.Services
             var bookQuery = new BookQuery { Book = book, StatusCode = 201 }; 
 
 
-            throw new NotImplementedException();
+            return bookQuery;
+
         }
 
         public async Task<bool> DeleteBookAsync(int id, CancellationToken cancellationToken = default)
@@ -38,12 +39,6 @@ namespace BookCatalogAPI.Services
             return null;
         }
 
-        public async Task<IEnumerable<BookQuery>> GetBooksAsync(BookQuery bookQuery, CancellationToken cancellationToken = default)
-        {
-            await Task.Delay(100, cancellationToken);
-            var books = _books.Values.Select(b => new BookQuery { Book = b, StatusCode = 200 }).ToList();
-            return books;
-        }
 
         public async Task<BookQuery?> UpdateBookAsync(int id, Book book, CancellationToken cancellationToken = default)
         {
