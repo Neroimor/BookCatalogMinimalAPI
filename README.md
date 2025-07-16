@@ -9,13 +9,10 @@
 - [Возможности](#возможности)  
 - [Требования](#требования)  
 - [Быстрый старт](#быстрый‑старт)  
-- [Структура проекта](#структура‑проекта)  
 - [Запуск API](#запуск‑api)  
 - [Запуск тестов](#запуск‑тестов)  
 - [Docker](#docker)  
 - [CI/CD](#cicd)  
-- [Участие в разработке](#участие‑в‑разработке)  
-- [Лицензия](#лицензия)
 
 ---
 
@@ -43,11 +40,12 @@
 ## Быстрый старт
 
 1. **Клонировать репозиторий**  
-   ```bash
+```bash
    git clone https://github.com/Neroimor/BookCatalogMinimalAPI.git
    cd BookCatalogMinimalAPI
    git checkout development
 ```
+
 2. **Сборка**
     
     ```bash
@@ -112,7 +110,7 @@ Swagger будет доступен по адресу `http://localhost:5000/swa
 
 ## CI/CD
 
-GitHub Actions workflow (`.github/workflows/ci.yml`) запускается на каждый push и pull‑request в ветку `development`:
+GitHub Actions workflow (`.github/workflows/ci.yml`) запускается на каждый push и pull‑request в ветку `main`:
 
 - Восстанавливает и собирает оба проекта
     
@@ -124,32 +122,3 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) запускается на
 Можно дополнить шагами по анализу покрытия, линтингу и т.д.
 
 ---
-
-## Участие в разработке
-
-1. Форкните репозиторий
-    
-2. Создайте ветку:
-    
-    ```bash
-    git checkout -b feature/YourFeature
-    ```
-    
-3. Внесите изменения и закоммитьте
-    
-4. Запушьте в ваш форк
-    
-5. Откройте Pull Request в ветку `development`
-    
-
-Пожалуйста, убедитесь, что все тесты проходят, и соблюдайте существующий стиль кода.
-
----
-
-## Лицензия
-
-Проект открыт по лицензии MIT. Подробнее в файле [LICENSE](https://chatgpt.com/c/LICENSE).
-
-```
-::contentReference[oaicite:0]{index=0}
-```
