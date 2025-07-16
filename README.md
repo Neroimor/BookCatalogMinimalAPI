@@ -24,7 +24,7 @@
   - **LoggingFilter**: логирует детали запроса через встроенный `ILogger`  
 - Хранение в памяти через `ConcurrentDictionary<int, Book>`  
 - Авто‑документация Swagger/OpenAPI  
-- **Unit & Integration Tests** в проекте `TestAPI/`  
+- **Unit Tests** в проекте `TestAPI/`  
 - **GitHub Actions** CI‑workflow в `.github/workflows/`  
 - **Dockerfile** для контейнеризации  
 
@@ -88,7 +88,7 @@ cd TestAPI
 dotnet test
 ```
 
-Все юнит‑ и интеграционные тесты запустятся и должны завершиться успешно.
+Все юнит тесты запустятся и должны завершиться успешно.
 
 ---
 
