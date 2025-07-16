@@ -117,8 +117,5 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) запускается на
 - Запускает `dotnet test` в `TestAPI/`
     
 - Отправляет статус сборки в GitHub
-    
-
-Можно дополнить шагами по анализу покрытия, линтингу и т.д.
 
 ---
