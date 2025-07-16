@@ -1,157 +1,72 @@
 name: CI
 
-  
-
 on:
-
-  push:
-
-    branches:
-
-      - development
-
-  pull_request:
-
-    branches:
-
-      - development
-
-  
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
 
 jobs:
-
-  prepare:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Checkout code
-
-        uses: actions/checkout@v3
-
-      - name: Setup .NET SDK
-
-        uses: actions/setup-dotnet@v3
-
-        with:
-
-          dotnet-version: '8.0.x'
-
-  
-
-  build-api:
-
-    needs: prepare
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-  
-
-      - name: Checkout code
-
-        uses: actions/checkout@v3
-
-      - name: Setup .NET SDK
-
-        uses: actions/setup-dotnet@v3
-
-        with:
-
-          dotnet-version: '8.0.x'
-
-  
-
-      - name: Restore API
-
-        run: dotnet restore BookCatalogAPI/BookCatalogAPI.sln
-
-      - name: Build API
-
-        run: dotnet build BookCatalogAPI/BookCatalogAPI.sln --no-restore --configuration Release
-
-  
-
-  test:
-
-    needs: build-api
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Checkout code
-
-        uses: actions/checkout@v3
-
-      - name: Setup .NET SDK
-
-        uses: actions/setup-dotnet@v3
-
-        with:
-
-          dotnet-version: '8.0.x'
-
-  
-
-      - name: Restore Tests
-
-        run: dotnet restore TestAPI/TestAPI.csproj
-
-      - name: Build Tests
-
-        run: dotnet build TestAPI/TestAPI.csproj --no-restore --configuration Release
-
-      - name: Test
-
-        run: dotnet test TestAPI/TestAPI.csproj --no-build --configuration Release --verbosity normal
-
-  
-
-  docker-build:
-
-      needs: test
-
-      runs-on: ubuntu-latest
-
-  
-
-      steps:
-
-        - name: Checkout code
-
-          uses: actions/checkout@v3
-
-  
-
-        - name: Build Docker image
-
-          run: |
-
-            docker build \
-
-              --file BookCatalogAPI/Dockerfile \
-
-              --tag bookcatalogapi:latest \
-
-              BookCatalogAPI
-
-  
-
-        - name: Save image to TAR
-
-          run: docker save bookcatalogapi:latest -o bookcatalogapi_latest.tar
-
-  
-
-        - name: Upload Docker image artifact
-
-          uses: actions/upload-artifact@v4
-
-          with:
-
-            name: docker-image
-
-            path: bookcatalogapi_latest.tar
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+  build-api:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore API
+        run: dotnet restore BookCatalogAPI/BookCatalogAPI.sln
+      - name: Build API
+        run: dotnet build BookCatalogAPI/BookCatalogAPI.sln --no-restore --configuration Release
+
+  test:
+    needs: build-api
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore Tests
+        run: dotnet restore TestAPI/TestAPI.csproj
+      - name: Build Tests
+        run: dotnet build TestAPI/TestAPI.csproj --no-restore --configuration Release
+      - name: Test
+        run: dotnet test TestAPI/TestAPI.csproj --no-build --configuration Release --verbosity normal
+
+  docker-build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build Docker image
+        run: |
+          docker build \
+            --file BookCatalogAPI/Dockerfile \
+            --tag bookcatalogapi:latest \
+            BookCatalogAPI
+      - name: Save image to TAR
+        run: docker save bookcatalogapi:latest -o bookcatalogapi_latest.tar
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: bookcatalogapi_latest.tar
