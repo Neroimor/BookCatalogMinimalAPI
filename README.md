@@ -66,35 +66,6 @@
     - Swagger UI: `https://localhost:5001/swagger`
         
 
----
-
-## Структура проекта
-
-```
-.
-├── .github/
-│   └── workflows/           # GitHub Actions CI‑workflow
-├── BookCatalogAPI/          # Основной проект Minimal API
-│   ├── Filters/
-│   │   ├── ValidationFilter.cs
-│   │   └── LoggingFilter.cs
-│   ├── Models/
-│   │   ├── Book.cs
-│   │   └── BookQuery.cs
-│   ├── Services/
-│   │   ├── IBookService.cs
-│   │   └── BookService.cs
-│   ├── Program.cs           # Регистрация DI и определение эндпоинтов
-│   └── BookCatalogAPI.csproj
-├── TestAPI/                 # xUnit‑проект с тестами
-│   ├── BookServiceTests.cs  # Юнит‑тесты для IBookService
-│   ├── EndpointTests.cs     # Интеграционные тесты через TestServer
-│   └── TestAPI.csproj
-├── Dockerfile               # Описание сборки контейнера
-└── README.md                # Этот файл
-```
-
-
 ## Запуск API
 
 - **Swagger UI**  
